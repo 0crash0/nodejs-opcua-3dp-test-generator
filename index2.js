@@ -188,7 +188,6 @@ const nodeVariable3 = namespace.addVariable({
         }
     }
 });
-var tsttxt="sda"
 
 
 const nodeVariable4 = namespace.addVariable({
