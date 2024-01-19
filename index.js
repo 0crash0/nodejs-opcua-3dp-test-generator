@@ -193,6 +193,6 @@ function constructAddressSpace(server) {
         process.exit(-1);
     }
 })();
-
- my3dprinter.start_homing()
+//my3dprinter.tst_arr()
+my3dprinter.start_homing()
 
