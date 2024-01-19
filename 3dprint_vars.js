@@ -1,7 +1,7 @@
 import lineByLine from "n-readlines";
 
 export default class TrdPrinter{
-    x_home_state=false;
+    /*x_home_state=false;
     y_home_state=false;
     z_home_state=false;
 
@@ -12,8 +12,8 @@ export default class TrdPrinter{
     bed_temp=30;
     E0_temp=30;
     E1_temp=30;
-    now_pos=[30,30,30];
-    next_pos=[30,30,30];
+    now_pos=[];
+    next_pos=[];
     speed=100;
     liner = new lineByLine('CFFFP_Schneekugel.gcode');
     line;
@@ -21,7 +21,7 @@ export default class TrdPrinter{
 
     Mooving_interval;
     Homing_interval;
-    rand_sensor=0;
+    rand_sensor=0;*/
     constructor() {
         this.x_home_state=false;
         this.y_home_state=false;
@@ -34,8 +34,20 @@ export default class TrdPrinter{
         this.bed_temp=30;
         this.E0_temp=30;
         this.E1_temp=30;
-        this.now_pos=new Array([30,30,30]);
-        this.next_pos=new Array([30,30,30]);
+        /*this.now_pos= {
+            x:30,
+            y:30,
+            z:30
+        }
+        this.next_pos={
+            x:30,
+            y:30,
+            z:30
+        }*/
+
+        this.now_pos=[30,30,30];
+        this.next_pos=[30,30,30];
+
         this.speed=100;
         this.liner = new lineByLine('CFFFP_Schneekugel.gcode');
         this.line;
@@ -45,11 +57,18 @@ export default class TrdPrinter{
         this.Homing_interval;
         this.rand_sensor=0;
     }
-     Trdp_homing(){
-        if(!this.x_home_state &&! this.homing){
+    tst_arr(){
+        this.next_pos[0] = -100;
+    }
+    go_homing(){
+
+        if(!this.x_home_state && !this.homing){
             this.next_pos[0] = -100;
             this.homing = true;
-            this.Mooving_interval=setInterval(this.Trdp_moove, 250);
+            this.Mooving_interval=setInterval(function () {
+                this.go_step();
+            }.bind(this), 250);
+
         }
         if(!this.x_home_sensor && this.homing && !this.x_home_state && this.next_pos[0]===-100){
             this.rand_sensor = Math.floor(Math.random() * 10)
@@ -69,7 +88,9 @@ export default class TrdPrinter{
             if(!this.y_home_state && this.homing){
                 console.log("Homing Y ....")
                 this.next_pos[1] = -100;
-                this.Mooving_interval=setInterval(this.Trdp_moove, 250);
+                this.Mooving_interval=setInterval(function () {
+                    this.go_step();
+                }.bind(this), 250);
             }
         }
         if(!this.y_home_sensor && this.homing && !this.y_home_state && this.next_pos[1]===-100){
@@ -88,7 +109,9 @@ export default class TrdPrinter{
             clearInterval(this.Mooving_interval)
             if(!this.z_home_state && this.homing){
                 this.next_pos[2] = -100;
-                this.Mooving_interval=setInterval(this.Trdp_moove, 250);
+                this.Mooving_interval=setInterval(function () {
+                    this.go_step();
+                }.bind(this), 250);
             }
         }
         if(!this.z_home_sensor && this.homing && !this.z_home_state && this.next_pos[2]===-100){
@@ -97,7 +120,7 @@ export default class TrdPrinter{
             if( this.rand_sensor === 10 || this.now_pos[2]<=-100){
                 this.z_home_sensor=true;
             }
-            console.log(rand_sensor)
+            console.log(this.rand_sensor)
         }
         if(this.z_home_sensor && this.x_home_sensor && this.y_home_sensor && this.homing && this.next_pos[2]===-100){
             this.now_pos[2]=0;
@@ -110,7 +133,7 @@ export default class TrdPrinter{
 
     }
 
-     Trdp_moove(){
+     go_step(){
         if(this.now_pos[0]!==this.next_pos[0]){
             this.now_pos[0]--;
         }
@@ -143,8 +166,12 @@ export default class TrdPrinter{
         setInterval(this.changeTemp, 1000);
     }
     start_homing(){
+
         if(!this.x_home_state || !this.y_home_state || !this.z_home_state){
-            this.Homing_interval=setInterval(this.Trdp_homing,2000)
+            //this.Homing_interval=setInterval(this.go_homing,2000)
+            this.Homing_interval=setTimeout(function () {
+                this.go_homing();
+            }.bind(this), 2000);
         }
     }
 }
