@@ -5,8 +5,6 @@ import TrdPrinter from "./3dprint_vars.js";
 let my3dprinter=new TrdPrinter();
 
 
-
-
 var userManager = {
     isValidUser: function (userName, password) {
         if (userName === "user1" && password === "password1") {
