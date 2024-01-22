@@ -65,9 +65,7 @@ export default class TrdPrinter{
         if(!this.x_home_state && !this.homing){
             this.next_pos[0] = -100;
             this.homing = true;
-            this.Mooving_interval=setInterval(function () {
-                this.go_step();
-            }.bind(this), 250);
+            this.Mooving_interval=setInterval(this.go_step.bind(this), 250);
 
         }
         if(!this.x_home_sensor && this.homing && !this.x_home_state && this.next_pos[0]===-100){
@@ -76,7 +74,6 @@ export default class TrdPrinter{
             if( this.rand_sensor === 10 || this.now_pos[0]<=-100){
                 this.x_home_sensor=true;
             }
-
             console.log(this.rand_sensor)
         }
         if(this.x_home_sensor && this.homing && !this.x_home_state){
@@ -84,13 +81,11 @@ export default class TrdPrinter{
             this.next_pos[0]=0;
             this.x_home_state=true;
             console.log("X Home!")
-            clearInterval(this.Mooving_interval)
+            this.clearMovingInterval.bind(this);
             if(!this.y_home_state && this.homing){
                 console.log("Homing Y ....")
                 this.next_pos[1] = -100;
-                this.Mooving_interval=setInterval(function () {
-                    this.go_step();
-                }.bind(this), 250);
+                this.Mooving_interval=setInterval(this.go_step.bind(this), 250);
             }
         }
         if(!this.y_home_sensor && this.homing && !this.y_home_state && this.next_pos[1]===-100){
@@ -106,12 +101,10 @@ export default class TrdPrinter{
             this.next_pos[1]=0;
             this.y_home_state=true;
             console.log("Y Home!");
-            clearInterval(this.Mooving_interval)
+            this.clearMovingInterval.bind(this);
             if(!this.z_home_state && this.homing){
                 this.next_pos[2] = -100;
-                this.Mooving_interval=setInterval(function () {
-                    this.go_step();
-                }.bind(this), 250);
+                this.Mooving_interval=setInterval(this.go_step.bind(this), 250);
             }
         }
         if(!this.z_home_sensor && this.homing && !this.z_home_state && this.next_pos[2]===-100){
@@ -128,7 +121,9 @@ export default class TrdPrinter{
             this.z_home_state=true;
             this.homing=false;
             console.log("Z Home!");
-            clearInterval(this.Homing_interval);
+            this.clearHomingInterval.bind(this);
+            this.clearMovingInterval.bind(this);
+            //clearInterval(this.Homing_interval.bind(this));
         }
 
     }
@@ -144,7 +139,8 @@ export default class TrdPrinter{
             this.now_pos[2]--;
         }
         if(this.now_pos[0]===this.next_pos[0]&&this.now_pos[1]===this.next_pos[1]&&this.now_pos[2]===this.next_pos[2]){
-            clearInterval(this.Mooving_interval)
+            this.clearHomingInterval.bind(this);
+            //clearInterval(this.Homing_interval.bind(this))
         }
         console.log(this.now_pos);
     }
@@ -162,17 +158,19 @@ export default class TrdPrinter{
         }
     }
 
-    start_changing_temp(){
-        setInterval(this.changeTemp, 1000);
-    }
     start_homing(){
 
         if(!this.x_home_state || !this.y_home_state || !this.z_home_state){
-            //this.Homing_interval=setInterval(this.go_homing,2000)
-            this.Homing_interval=setTimeout(function () {
-                this.go_homing();
-            }.bind(this), 2000);
+            this.Homing_interval=setInterval(this.go_homing.bind(this),2000)
+            //this.Homing_interval=setTimeout(this.go_homing.bind(this), 2000);
         }
+    }
+
+    clearMovingInterval() {
+        clearInterval(this.Mooving_interval);
+    }
+    clearHomingInterval() {
+        clearInterval(this.Mooving_interval);
     }
 }
 
