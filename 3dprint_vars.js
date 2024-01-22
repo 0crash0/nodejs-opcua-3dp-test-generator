@@ -1,27 +1,6 @@
 import lineByLine from "n-readlines";
 
 export default class TrdPrinter{
-    /*x_home_state=false;
-    y_home_state=false;
-    z_home_state=false;
-
-    x_home=false;
-    y_home=false;
-    z_home=false;
-
-    bed_temp=30;
-    E0_temp=30;
-    E1_temp=30;
-    now_pos=[];
-    next_pos=[];
-    speed=100;
-    liner = new lineByLine('CFFFP_Schneekugel.gcode');
-    line;
-    lineNumber = 0;
-
-    Mooving_interval;
-    Homing_interval;
-    rand_sensor=0;*/
     constructor() {
         this.x_home_state=false;
         this.y_home_state=false;
@@ -33,7 +12,8 @@ export default class TrdPrinter{
 
         this.bed_temp=30;
         this.E0_temp=30;
-        this.E1_temp=30;
+        this.E0_temp_new=255;
+        this.bed_temp_new=100;
         /*this.now_pos= {
             x:30,
             y:30,
@@ -53,25 +33,31 @@ export default class TrdPrinter{
         this.line;
         this.lineNumber = 0;
 
+        this.rand_sensor=0;
+
         this.Mooving_interval;
         this.Homing_interval;
-        this.rand_sensor=0;
+        this.Temp_interval;
+        this.Work_interval;
+
+        this.working=false;
+        this.lineworking=false;
+        this.GcodeLine= "";
     }
-    tst_arr(){
-        this.next_pos[0] = -100;
-    }
+
     go_homing(){
 
         if(!this.x_home_state && !this.homing){
             this.next_pos[0] = -100;
             this.homing = true;
             this.Mooving_interval=setInterval(this.go_step.bind(this), 250);
+            console.log(this.Mooving_interval)
 
         }
         if(!this.x_home_sensor && this.homing && !this.x_home_state && this.next_pos[0]===-100){
             this.rand_sensor = Math.floor(Math.random() * 10)
             console.log("X Rand sensor ");
-            if( this.rand_sensor === 10 || this.now_pos[0]<=-100){
+            if( this.rand_sensor > 5 || this.now_pos[0]<=-100){
                 this.x_home_sensor=true;
             }
             console.log(this.rand_sensor)
@@ -80,8 +66,8 @@ export default class TrdPrinter{
             this.now_pos[0]=0;
             this.next_pos[0]=0;
             this.x_home_state=true;
-            console.log("X Home!")
-            this.clearMovingInterval.bind(this);
+            console.log("X Home!");
+            clearInterval(this.Mooving_interval);
             if(!this.y_home_state && this.homing){
                 console.log("Homing Y ....")
                 this.next_pos[1] = -100;
@@ -91,7 +77,7 @@ export default class TrdPrinter{
         if(!this.y_home_sensor && this.homing && !this.y_home_state && this.next_pos[1]===-100){
             this.rand_sensor = Math.floor(Math.random() * 10)
             console.log("Y Rand sensor");
-            if( this.rand_sensor === 10 || this.now_pos[1]<=-100){
+            if( this.rand_sensor > 5 || this.now_pos[1]<=-100){
                 this.y_home_sensor=true;
             }
             console.log(this.rand_sensor)
@@ -101,7 +87,7 @@ export default class TrdPrinter{
             this.next_pos[1]=0;
             this.y_home_state=true;
             console.log("Y Home!");
-            this.clearMovingInterval.bind(this);
+            clearInterval(this.Mooving_interval);
             if(!this.z_home_state && this.homing){
                 this.next_pos[2] = -100;
                 this.Mooving_interval=setInterval(this.go_step.bind(this), 250);
@@ -110,7 +96,7 @@ export default class TrdPrinter{
         if(!this.z_home_sensor && this.homing && !this.z_home_state && this.next_pos[2]===-100){
             this.rand_sensor = Math.floor(Math.random() * 10);
             console.log("Z Rand sensor");
-            if( this.rand_sensor === 10 || this.now_pos[2]<=-100){
+            if( this.rand_sensor > 5 || this.now_pos[2]<=-100){
                 this.z_home_sensor=true;
             }
             console.log(this.rand_sensor)
@@ -121,11 +107,12 @@ export default class TrdPrinter{
             this.z_home_state=true;
             this.homing=false;
             console.log("Z Home!");
-            this.clearHomingInterval.bind(this);
-            this.clearMovingInterval.bind(this);
-            //clearInterval(this.Homing_interval.bind(this));
-        }
+            clearInterval(this.Homing_interval);
+            clearInterval(this.Mooving_interval);
+            this.start_work();
 
+        }
+        console.log("GO HOMING");
     }
 
      go_step(){
@@ -139,22 +126,32 @@ export default class TrdPrinter{
             this.now_pos[2]--;
         }
         if(this.now_pos[0]===this.next_pos[0]&&this.now_pos[1]===this.next_pos[1]&&this.now_pos[2]===this.next_pos[2]){
-            this.clearHomingInterval.bind(this);
-            //clearInterval(this.Homing_interval.bind(this))
+            clearInterval(this.Mooving_interval);
+            console.log(this.Mooving_interval);
         }
         console.log(this.now_pos);
     }
+
+    start_work(){
+        this.Work_interval=setInterval(this.Gcode_readLine.bind(this),2000);
+    }
     Gcode_readLine(){
-        this.line = this.liner.next()
-        console.log('Line ' + this.lineNumber + ': ' + this.line.toString('ascii'));
-        this.lineNumber++;
-        return ""+this.line;
+        if(!this.lineworking){
+            this.lineworking=true;
+            this.line = this.liner.next()
+            console.log('Line ' + this.lineNumber + ': ' + this.line.toString('ascii'));
+            this.lineNumber++;
+            this.GcodeLine= ""+this.line;
+            this.lineworking=false;
+        }
+
     }
     changeTemp() {
-        this.bed_temp=bed_temp+10;
-        this.date_var1=new Date()
-        if(this.bed_temp>=1000){
-            this.bed_temp=0;
+        if(this.E0_temp<this.E0_temp_new){
+            this.E0_temp+=1;
+        }
+        if(this.bed_temp<this.bed_temp_new){
+            this.bed_temp+=1;
         }
     }
 
@@ -165,12 +162,8 @@ export default class TrdPrinter{
             //this.Homing_interval=setTimeout(this.go_homing.bind(this), 2000);
         }
     }
-
-    clearMovingInterval() {
-        clearInterval(this.Mooving_interval);
-    }
-    clearHomingInterval() {
-        clearInterval(this.Mooving_interval);
+    runTemp(){
+        this.Temp_interval=setInterval(this.changeTemp.bind(this),200)
     }
 }
 
