@@ -1,8 +1,27 @@
 import OPCUAServer from "node-opcua-server";
 import {DataType, nodesets, OPCUACertificateManager, Variant, VariantArrayType} from "node-opcua";
 import TrdPrinter from "./3dprint_vars.js";
+import express from "express"
+
+const app= express();
+
+app.get('/', (req, res) => {
+    res.send("Hello World! <a href='/start'>start</a>")
+})
+app.get('/stop', (req, res) => {
+    res.send("<a href='/start'>start</button>")
+    my3dprinter.stop_machine();
+})
+app.get('/start', (req, res) => {
+    res.send("<a href='/stop'>stop</a>")
+    my3dprinter.start_homing();
+})
+app.listen(3000, () => {
+    console.log(`Example app listening on port 3000`)
+})
 
 let my3dprinter=new TrdPrinter();
+
 
 
 var userManager = {
@@ -100,8 +119,7 @@ function constructAddressSpace(server) {
         minimumSamplingInterval: 1000,
         value: {
             get: () => {
-                const t = date_var1 / 10000.0;
-                const value = my3dprinter.bed_temp + 10.0 * Math.sin(t);
+                const value = my3dprinter.E0_temp ;
                 return new Variant({dataType: DataType.Double, value: value});
             }
         }
@@ -129,7 +147,7 @@ function constructAddressSpace(server) {
         minimumSamplingInterval: 1000,
         value: {
             get: () => {
-                return new Variant({dataType: DataType.String, value: my3dprinter.Gcode_readLine()});
+                return new Variant({dataType: DataType.String, value: my3dprinter.GcodeLine});
             }
         }
     });
@@ -192,5 +210,5 @@ function constructAddressSpace(server) {
     }
 })();
 //my3dprinter.tst_arr()
-my3dprinter.start_homing()
+//my3dprinter.start_homing()
 
