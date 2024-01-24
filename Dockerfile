@@ -1,6 +1,6 @@
 FROM node:17-alpine as build
 MAINTAINER Saprin Alexey
-LABEL version="1.1"
+LABEL version="1.2.0"
 WORKDIR /app
 
 COPY package*.json ./

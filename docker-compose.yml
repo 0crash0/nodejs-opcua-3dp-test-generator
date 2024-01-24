@@ -1,8 +1,8 @@
 version: "3.8"
 services:
   opc-server-3dpr-svc:
-    container_name: opc-server-3dpr-cont
-    image: 0crash0/test:opc-server-3dpr
+    container_name: opc-server-3dpr
+    image: 0crash0/opc-server-3dpr:v1.2.0
     build:
       context: .
       dockerfile: Dockerfile
