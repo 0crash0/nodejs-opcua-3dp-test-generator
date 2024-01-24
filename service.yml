@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: opc-server-3dpr
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 3000

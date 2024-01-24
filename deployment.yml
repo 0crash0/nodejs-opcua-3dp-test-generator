@@ -25,7 +25,7 @@ spec:
       name: opc-server-3dpr
     spec:
       containers:
-        - image: opc-server-3dpr-cont
+        - image: opc-server-3dpr
           imagePullPolicy: IfNotPresent
           name: opc-server-3dpr
           ports:
