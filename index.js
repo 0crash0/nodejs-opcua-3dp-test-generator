@@ -5,15 +5,15 @@ import express from "express"
 
 const app= express();
 
-app.get('/', (req, res) => {
-    res.send("Hello World! <a href='/start'>start</a>")
+app.get('/datagen/opc-server-3dpr/', (req, res) => {
+    res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
 })
-app.get('/stop', (req, res) => {
-    res.send("<a href='/start'>start</button>")
+app.get('/datagen/opc-server-3dpr/stop', (req, res) => {
+    res.send("<a href='/datagen/opc-server-3dpr/start'>start</button>")
     my3dprinter.stop_machine();
 })
-app.get('/start', (req, res) => {
-    res.send("<a href='/stop'>stop</a>")
+app.get('/datagen/opc-server-3dpr/start', (req, res) => {
+    res.send("<a href='/datagen/opc-server-3dpr/stop'>stop</a>")
     my3dprinter.start_homing();
 })
 app.listen(3000, () => {
@@ -211,4 +211,7 @@ function constructAddressSpace(server) {
 })();
 //my3dprinter.tst_arr()
 //my3dprinter.start_homing()
-
+/*
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGUSR2', gracefulShutdown); // Sent by nodemon*/
