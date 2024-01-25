@@ -16,7 +16,7 @@ spec:
       name: opc-server-3dpr
     spec:
       containers:
-        - image: 0crash0/opc-server-3dpr:v1.2.1
+        - image: 0crash0/opc-server-3dpr:v1.2.2
           imagePullPolicy: Always
           name: opc-server-3dpr
           ports:

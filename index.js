@@ -5,6 +5,9 @@ import express from "express"
 
 const app= express();
 
+app.get('/', (req, res) => {
+    res.send("GO to <a href='/datagen/opc-server-3dpr/'>new url</a>")
+})
 app.get('/datagen/opc-server-3dpr/', (req, res) => {
     res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
 })
@@ -15,6 +18,23 @@ app.get('/datagen/opc-server-3dpr/stop', (req, res) => {
 app.get('/datagen/opc-server-3dpr/start', (req, res) => {
     res.send("<a href='/datagen/opc-server-3dpr/stop'>stop</a>")
     my3dprinter.start_homing();
+})
+app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    res.end(JSON.stringify({
+        'x_home_state': my3dprinter.x_home_state,
+        'y_home_state': my3dprinter.y_home_state,
+        'z_home_state': my3dprinter.z_home_state,
+        'homing':my3dprinter.homing,
+        'working':my3dprinter.working,
+        'coordinates': my3dprinter.now_pos,
+        'line_work': my3dprinter.GcodeLine,
+        'working_line_num': my3dprinter.lineNumber,
+        'bed_temp': my3dprinter.bed_temp,
+        'e0_temp': my3dprinter.E0_temp
+    }));
+
 })
 app.listen(3000, () => {
     console.log(`Example app listening on port 3000`)
