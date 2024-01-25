@@ -12,11 +12,13 @@ app.get('/datagen/opc-server-3dpr/', (req, res) => {
     res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
 })
 app.get('/datagen/opc-server-3dpr/stop', (req, res) => {
-    res.send("<a href='/datagen/opc-server-3dpr/start'>start</button>")
+    res.send("<a href='/datagen/opc-server-3dpr/start'>start</button>" +
+        "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.stop_machine();
 })
 app.get('/datagen/opc-server-3dpr/start', (req, res) => {
-    res.send("<a href='/datagen/opc-server-3dpr/stop'>stop</a>")
+    res.send("<a href='/datagen/opc-server-3dpr/stop'>stop</a>" +
+        "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.start_homing();
 })
 app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
@@ -29,6 +31,7 @@ app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
         'homing':my3dprinter.homing,
         'working':my3dprinter.working,
         'coordinates': my3dprinter.now_pos,
+        'filename': my3dprinter.filename,
         'line_work': my3dprinter.GcodeLine,
         'working_line_num': my3dprinter.lineNumber,
         'bed_temp': my3dprinter.bed_temp,
@@ -199,7 +202,7 @@ function constructAddressSpace(server) {
                 nodesets.di
             ],
             buildInfo: {
-                productName: "Sample NodeOPCUA Server1",
+                productName: "opcserver3dpr",
 
                 buildNumber: "7658",
                 buildDate: new Date(2020, 6, 14)

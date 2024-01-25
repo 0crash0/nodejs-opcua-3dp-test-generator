@@ -39,7 +39,8 @@ export default class TrdPrinter{
         this.extruder_next_pos=0;
 
         this.speed=100;
-        this.liner = new lineByLine('CFFFP_Schneekugel.gcode');
+        this.filename = 'CFFFP_Schneekugel.gcode';
+        this.liner = new lineByLine(this.filename);
         this.line;
         this.lineNumber = 0;
 

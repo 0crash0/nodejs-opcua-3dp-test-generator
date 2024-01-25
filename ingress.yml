@@ -19,4 +19,10 @@ spec:
                 name: opc-server-3dpr
                 port:
                   number: 3000
-
+          - pathType: Prefix
+            path: "/datagen/opc-server-3dpr"
+            backend:
+              service:
+                name: opc-server-3dpr
+                port:
+                  number: 3000
