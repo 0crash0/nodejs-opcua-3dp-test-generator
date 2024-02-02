@@ -1,0 +1,11 @@
+﻿_Name;_Select(x);_ValueType;_Delete(x);_NewName;Accuracy;Archive;CalcAggregates;CalculationAlgorithmExpression;Compression;CompressionDeviation;CompressionTimeDeadBand;CompressionTimespan;CompressionType;Convers;Description;DictId;DictSource;EngUnits;InstrumentTag;Interpolation;Output;PointSource;Reception;SaveAddTs;SaveQuality;Scan;ScanClass;SecurityGroups;SourceCompression;SourceCompressionDeviation;SourceCompressionTimeDeadBand;SourceCompressionTimespan;SourceCompressionType;SourceTag;Span;SquareRoot;TTL;TotalCode;Zero
+3dp_coords;x;STRING;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;coordinates;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_bed_temp;x;DOUBLE;;;ms;1;0;;0;0.5;0:0:0;0:0:10;swingingdoor;0;;;local;;bed_temp;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:0:0;0:0:0;deadband;;0;0;-1;0;0
+3dp_e0_temp;x;DOUBLE;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;e0_temp;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_homing;x;BOOL;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;homing;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_line_work;x;STRING;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;line_work;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_working;x;BOOL;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;working;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_working_line_num;x;LONG;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;working_line_num;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_x_home_state;x;BOOL;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;x_home_state;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_y_home_state;x;BOOL;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;y_home_state;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0
+3dp_z_home_state;x;BOOL;;;ms;1;0;;0;0.5;0:00:00;0:00:10;swingingdoor;0;;;local;;z_home_state;0;0;"[""3dp""]";1;1;1;1;;"[""common""]";0;0;0:00:00;0:00:00;deadband;;0;0;-1;0;0

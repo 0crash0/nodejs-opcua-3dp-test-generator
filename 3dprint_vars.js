@@ -39,7 +39,7 @@ export default class TrdPrinter{
         this.extruder_next_pos=0;
 
         this.speed=100;
-        this.filename = 'CFFFP_Schneekugel.gcode';
+        this.filename = './gcode/CFFFP_Schneekugel.gcode';
         this.liner = new lineByLine(this.filename);
         this.line;
         this.lineNumber = 0;
@@ -166,8 +166,22 @@ export default class TrdPrinter{
         if(Math.abs(this.now_pos[2]-this.next_pos[2]) <0.2){
             this.now_pos[2]=this.next_pos[2];
         }
-        if(this.now_pos[0]===this.next_pos[0]&&this.now_pos[1]===this.next_pos[1]&&this.now_pos[2]===this.next_pos[2] ){
+/////////////////////////////////////////////////////////////////extruder THIS MAY CAUSE A PROBLEMM!!!!
+         if(this.extruder_pos!==this.extruder_next_pos ){
+             if(this.extruder_pos>this.extruder_next_pos){
+                 this.extruder_pos=this.extruder_pos-0.2;
+             }
+             else{
+                 this.extruder_pos=this.extruder_pos+0.2;
+             }
+         }
+         if(Math.abs(this.extruder_pos-this.extruder_next_pos) <0.2){
+             this.extruder_pos=this.extruder_next_pos;
+         }
+////////////////////////////////////////////////////////////////extruder THIS MAY CAUSE A PROBLEMM!!!!
+        if(this.now_pos[0]===this.next_pos[0]&&this.now_pos[1]===this.next_pos[1]&&this.now_pos[2]===this.next_pos[2] && this.extruder_pos===this.extruder_next_pos){
             this.next_pos=this.now_pos;
+            this.extruder_pos=this.extruder_next_pos;
 
             clearInterval(this.Mooving_interval);
             //console.log(this.Mooving_interval);
@@ -175,7 +189,7 @@ export default class TrdPrinter{
                 this.lineworking = false;
             }
         }
-        console.log(this.now_pos);
+        console.log(this.now_pos,"extr ",this.extruder_pos,"next extr ", this.extruder_next_pos);
     }
 
     start_work(){
@@ -258,6 +272,9 @@ export default class TrdPrinter{
                         if (!!this.g1Result.args.z) {
                             this.next_pos[2] = this.g1Result.args.z;
                         }
+                        if (!!this.g1Result.args.e) {
+                            this.extruder_next_pos = this.g1Result.args.e;
+                        }
                         this.Mooving_interval = setInterval(this.go_step.bind(this), MoovInterval);
                     }
                 } else {
@@ -327,6 +344,7 @@ export default class TrdPrinter{
         clearInterval(this.Work_interval);
         this.working=false;
         this.homing=false;
+        this.liner.close()
         console.log("STOP MACHINE");
 
         this.x_home_state=false;
@@ -358,7 +376,7 @@ export default class TrdPrinter{
         this.extruder_next_pos=0;
 
         this.speed=100;
-        this.liner = new lineByLine('CFFFP_Schneekugel.gcode');
+        this.liner = new lineByLine('./gcode/CFFFP_Schneekugel.gcode');
         this.line;
         this.lineNumber = 0;
 
@@ -372,6 +390,11 @@ export default class TrdPrinter{
         this.working=false;
         this.lineworking=false;
         this.GcodeLine= "";
+    }
+    set_line(setLine){
+        if (typeof this.lineNumber === 'number' && this.x_home_state && this.y_home_state && this.z_home_state) {
+            this.lineNumber = setLine;
+        }
     }
 }
 

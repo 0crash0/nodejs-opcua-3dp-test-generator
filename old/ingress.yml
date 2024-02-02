@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: opc-server-3dpr-ingress
+spec:
+  rules:
+    - host: opc-server-3dpr.me
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: opc-server-3dpr
+                port:
+                  number: 3000

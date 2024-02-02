@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: opc-server-3dpr
+  name: opc-server-3dpr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opc-server-3dpr
+  template:
+    metadata:
+      labels:
+        app: opc-server-3dpr
+      name: opc-server-3dpr
+    spec:
+      containers:
+        - image: 0crash0/opc-server-3dpr:v1.2.0
+          imagePullPolicy: Always
+          name: opc-server-3dpr
+          ports:
+            - containerPort: 26543
+              protocol: TCP
+            - containerPort: 3000
+              protocol: TCP

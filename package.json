@@ -1,6 +1,6 @@
 {
   "name": "opc-test-gen1",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,14 +9,19 @@
   },
   "type": "module",
   "keywords": [],
-  "author": "",
+  "author": "Saprin Alexey",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "gcode-json-converter": "^1.2.1",
+    "gcode-preview": "^2.13.0",
     "n-readlines": "^1.0.1",
     "node-opc-da": "^1.0.7",
     "node-opcua": "^2.119.2",
-    "node-opcua-server": "^2.119.2"
+    "node-opcua-server": "^2.119.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
