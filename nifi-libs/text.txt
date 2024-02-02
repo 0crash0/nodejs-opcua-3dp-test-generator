@@ -1,0 +1,2 @@
+UA-Java 549bb945
+nifi-opc-ua-bundles master
