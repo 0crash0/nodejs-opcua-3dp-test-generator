@@ -1,0 +1,98 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>GCode Preview</title>
+  <link rel="stylesheet" href="/src/style.css">
+
+<body>
+  <canvas id="renderer" class="gcode-previewer" data-engine="three.js r144" width="1920" height="892" style="touch-action: none;"></canvas>
+
+  <div class="dnd">☝️ Drop a gcode file here to view it</div>
+ 
+  <div class="sidebar">
+    <div>
+      <h1><a href="/datagen/opc-server-3dpr/start">Start</a></h1>
+     
+      <section>
+        <div class="controls">
+          <label>End layer <output id="end-layer-value">162</output></label>&nbsp;<input type="range" min="1" value="0" id="end-layer" max="162">
+        </div>
+        <div class="controls">
+          <label>Start layer <output id="start-layer-value">1</output></label>&nbsp;<input type="range" min="1" value="1" id="start-layer" max="162">
+        </div>
+        <div class="controls">
+          <label>Line width <output id="line-width-value">1</output></label>&nbsp;<input type="range" min="1" max="50" value="1" id="line-width">
+        </div>
+        <div class="controls">
+          <label for="single-layer-mode">Single layer mode</label><input type="checkbox" id="single-layer-mode">
+        </div>
+        <div class="controls">
+          <label for="extrusion">Extrusion</label><input type="checkbox" id="extrusion" checked="checked">
+        </div>
+        <div class="controls">
+          <label for="render-tubes">Render tubes</label><input type="checkbox" id="render-tubes">
+        </div>
+        <div class="controls">
+          <label for="extrusion-color">Extrusion color</label>
+          <input type="color" id="extrusion-color" value="#ff0000">
+        </div>
+        <div class="controls">
+          <label for="travel">Travel</label><input type="checkbox" id="travel">
+        </div>
+        <div class="controls">
+          <label for="travel-color">Travel color</label>
+          <input type="color" id="travel-color" value="#0000ff">
+        </div>
+        <div class="controls">
+          <label for="highlight">Highlight top layer</label><input type="checkbox" id="highlight" checked="checked">
+        </div>
+        <div class="controls">
+          <label for="top-layer-color">Top layer color</label>
+          <input type="color" id="top-layer-color" value="#00ffff">
+        </div>
+        <div class="controls">
+          <label for="last-segment-color">Last segment color</label>
+          <input type="color" id="last-segment-color" value="#ffffff">
+        </div>
+        <div class="controls">
+          <label for="background-color">Background color</label>
+          <input type="color" id="background-color" value="#e0e0e0">
+        </div>
+      </section>
+      <section>
+        <div class="controls">
+          <label for="drawBuildVolume">Draw build volume</label><input type="checkbox" id="drawBuildVolume" checked="">
+        </div>
+        <div class="controls">
+          <label for="buildVolumeX">Build volume (x)&nbsp;</label><input type="number" id="buildVolumeX" step="10" value="300">
+        </div>
+        <div class="controls">
+          <label for="buildVolumeY">Build volume (y)&nbsp;</label><input type="number" id="buildVolumeY" step="10" value="300">
+        </div>
+        <div class="controls">
+          <label for="buildVolumeZ">Build volume (z)&nbsp;</label><input type="number" id="buildVolumeZ" step="10" value="300">
+        </div>
+
+      </section>
+      <section >
+        <button id="snapshot">Create snapshot</button>
+      </section>
+
+    </div>
+    <div>
+		<div>
+          <a href="https://github.com/remcoder/gcode-preview"> GitHub</a> - MIT license
+        </div>
+    </div>
+  </div>
+
+  <script src="/src/three.min.js"></script>
+  <script src="/src/canvas2image.js"></script>
+  <script src="/src/gcode-preview.js"></script>
+  <script src="/src/demo.js"></script>
+  <script>
+    const gcodeDemo = initDemo();
+    loadGCodeFromServer('/gcode/CFFFP_Schneekugel.gcode');
+  </script>
+
+</body></html>

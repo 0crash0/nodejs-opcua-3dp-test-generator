@@ -2,12 +2,28 @@ import OPCUAServer from "node-opcua-server";
 import {DataType, nodesets, OPCUACertificateManager, Variant, VariantArrayType} from "node-opcua";
 import TrdPrinter from "./3dprint_vars.js";
 import express from "express"
+import path from 'path';
+const __dirname = path.dirname('./index.html');
+
+import cors from 'cors'
+
 
 const app= express();
+app.use(cors());
 
+app.use(
+    '/src',
+    express.static(path.resolve(__dirname,"src"))
+);
+app.use(
+    '/gcode',
+    express.static(path.resolve(__dirname,"gcode"))
+);
 app.get('/', (req, res) => {
-    res.send("GO to <a href='/datagen/opc-server-3dpr/'>new url</a>")
+    //res.send("GO to <a href='/datagen/opc-server-3dpr/'>new url</a>")
+    res.sendFile('index.html',{ root: __dirname });
 })
+
 app.get('/datagen/opc-server-3dpr/', (req, res) => {
     res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
 })
@@ -21,6 +37,12 @@ app.get('/datagen/opc-server-3dpr/start', (req, res) => {
         "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.start_homing();
 })
+
+app.get('/datagen/opc-server-3dpr/setline/:id', (req, res) => {
+    res.send("requested to set line to:" + req.params.id+ "<a href='/datagen/opc-server-3dpr/stop'>stop</a>" +
+        "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
+    my3dprinter.set_line(req.params.id);
+})
 app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
@@ -31,11 +53,12 @@ app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
         'homing':my3dprinter.homing,
         'working':my3dprinter.working,
         'coordinates': my3dprinter.now_pos,
-        'filename': my3dprinter.filename,
         'line_work': my3dprinter.GcodeLine,
+        'filename': my3dprinter.filename,
         'working_line_num': my3dprinter.lineNumber,
         'bed_temp': my3dprinter.bed_temp,
-        'e0_temp': my3dprinter.E0_temp
+        'e0_temp': my3dprinter.E0_temp,
+        'extruder':my3dprinter.extruder_pos
     }));
 
 })
