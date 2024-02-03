@@ -1,18 +1,18 @@
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+
   <title>GCode Preview</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="/old/gcode-preview/src/gcode-preview/src/style.css">
 
 <body>
   <canvas id="renderer" class="gcode-previewer" data-engine="three.js r144" width="1920" height="892" style="touch-action: none;"></canvas>
 
   <div class="dnd">☝️ Drop a gcode file here to view it</div>
- 
+
   <div class="sidebar">
     <div>
       <h1><a href="/datagen/opc-server-3dpr/start">Start</a></h1>
-     
+
       <section>
         <div class="controls">
           <label>End layer <output id="end-layer-value">162</output></label>&nbsp;<input type="range" min="1" value="0" id="end-layer" max="162">
@@ -86,10 +86,10 @@
     </div>
   </div>
 
-  <script src="/src/three.min.js"></script>
-  <script src="/src/canvas2image.js"></script>
-  <script src="/src/gcode-preview.js"></script>
-  <script src="/src/demo.js"></script>
+  <script src="/old/gcode-preview/src/gcode-preview/src/three.min.js"></script>
+  <script src="/old/gcode-preview/src/gcode-preview/src/canvas2image.js"></script>
+  <script src="/old/gcode-preview/src/gcode-preview/src/gcode-preview.js"></script>
+  <script src="/old/gcode-preview/src/gcode-preview/src/demo.js"></script>
   <script>
     const gcodeDemo = initDemo();
     loadGCodeFromServer('/gcode/CFFFP_Schneekugel.gcode');

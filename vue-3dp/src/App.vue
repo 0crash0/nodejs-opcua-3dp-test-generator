@@ -22,7 +22,7 @@ import axios from "axios";
 
 const loadJSONDelay = 1000;
 const loadGcodeDelay=50;
-const gCodeUrl = 'http://localhost:3000/gcode/CFFFP_Schneekugel.gcode';
+const gCodeUrl = '/datagen/opc-server-3dpr/gcode/CFFFP_Schneekugel.gcode';
 
 
 
@@ -38,10 +38,10 @@ export default {
   data() {
     return {
       layersLoaded: layersLoaded,
-      url_json: 'http://localhost:3000/datagen/opc-server-3dpr/getdatajson',
-      url_start: 'http://localhost:3000/datagen/opc-server-3dpr/start',
-      url_stop: 'http://localhost:3000/datagen/opc-server-3dpr/stop',
-      url_setline: 'http://localhost:3000/datagen/opc-server-3dpr/setline/',
+      url_json: '/datagen/opc-server-3dpr/getdatajson',
+      url_start: '/datagen/opc-server-3dpr/start',
+      url_stop: '/datagen/opc-server-3dpr/stop',
+      url_setline: '/datagen/opc-server-3dpr/setline/',
       Trdp_data: [],
       firstRender:true,
       rendering:false,

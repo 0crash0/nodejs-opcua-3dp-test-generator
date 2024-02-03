@@ -12,21 +12,25 @@ const app= express();
 app.use(cors());
 
 app.use(
-    '/src',
-    express.static(path.resolve(__dirname,"src"))
+    '/css',
+    express.static(path.resolve(__dirname,"css"))
 );
 app.use(
-    '/gcode',
+    '/js',
+    express.static(path.resolve(__dirname,"js"))
+);
+app.use(
+    '/datagen/opc-server-3dpr/gcode',
     express.static(path.resolve(__dirname,"gcode"))
 );
-app.get('/', (req, res) => {
+app.get('/datagen/opc-server-3dpr/', (req, res) => {
     //res.send("GO to <a href='/datagen/opc-server-3dpr/'>new url</a>")
     res.sendFile('index.html',{ root: __dirname });
 })
 
-app.get('/datagen/opc-server-3dpr/', (req, res) => {
+/*app.get('/datagen/opc-server-3dpr/', (req, res) => {
     res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
-})
+})*/
 app.get('/datagen/opc-server-3dpr/stop', (req, res) => {
     res.send("<a href='/datagen/opc-server-3dpr/start'>start</button>" +
         "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")

@@ -4,8 +4,9 @@
 
 ```
 docker login --username username
-docker-compoe --bulid
+docker-compose --bulid
 docker-compose up
+docker push 0crash0/opc-server-3dpr:v2.0.0
 ```
 
 ```
