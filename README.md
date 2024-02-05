@@ -34,11 +34,12 @@ https://hub.docker.com/repository/docker/0crash0/opc-server-3dpr/general
 | nifi processor group    | [try_to_get_my_rest.json][nifiGrp]        |
 
 
-### nifi opc ua processors(cloned to nifi-lib in this repo):
+### nifi opc ua processors(built has in this repo [nifi-libs][nifiProcsrs]):
 https://github.com/linksmart/nifi-opc-ua-bundles  
 
 opc-ua-stack-1.3.343.jar is requiered for building nifi-opcua.nar
 
 
-[nifiTplt]: <https://github.com//README.md>
-[nifiGrp]: <https://github.com//README.md>
+[nifiTplt]: <[https://github.com//README.md](https://github.com/0crash0/nodejs-opcua-3dp-test-generator/blob/main/ziiot/nifi_templates/3dp_test_gen_template_rest.xml)https://github.com/0crash0/nodejs-opcua-3dp-test-generator/blob/main/ziiot/nifi_templates/3dp_test_gen_template_rest.xml>
+[nifiGrp]: <[https://github.com//README.md](https://github.com/0crash0/nodejs-opcua-3dp-test-generator/blob/main/ziiot/nifi_templates/try_to_get_my_rest.json)https://github.com/0crash0/nodejs-opcua-3dp-test-generator/blob/main/ziiot/nifi_templates/try_to_get_my_rest.json>
+[nifiProcsrs]: <[https://github.com//README.md](https://github.com/0crash0/nodejs-opcua-3dp-test-generator/tree/main/nifi-libs)https://github.com/0crash0/nodejs-opcua-3dp-test-generator/tree/main/nifi-libs>
