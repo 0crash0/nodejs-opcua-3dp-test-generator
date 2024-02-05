@@ -1,26 +1,28 @@
-# Test data generator for opc ua interface
+# Test data generator for Ziiot platform by opc ua interface or REST API
 ### simulator of 3d printer and setting parameters at OPC UA and rest api
 ## docker and kubernetes ready
 
-```
-docker login --username username
-docker-compose --bulid
-docker-compose up
-docker push 0crash0/opc-server-3dpr:v2.0.0
-```
 
-```
-sudo k3s kubectl create secret docker-registry registrysecret
---docker-server='https://index.docker.io/v1/'
---docker-username='<user>'
---docker-password='<pass>'
-```
 
-```
-sudo k3s kubectl apply -f deployment.yml
-sudo k3s kubectl apply -f service.yml
-sudo k3s kubectl apply -f ingress.yml
-```
+parameters exported by REST 
+(https://YOUR_SERVER/datagen/opc-server-3dpr/getdatajson):
+
+| parameter        | description                                                     |
+|------------------|-----------------------------------------------------------------|
+| x_home_state     | is x axis home                                                  |
+| y_home_state     | is y axis home                                                  |
+| z_home_state     | is z axis home                                                  |
+| homing           | is printer going home                                           |
+| working          | is printer working                                              |
+| coordinates      | array of current printer coordinates                            |
+| line_work        | current file line                                               |
+| filename         | current working file                                            |
+| working_line_num | line number of working file                                     |
+| bed_temp         | temp of printer bed                                             |
+| e0_temp          | temp of extruder tool head                                      |
+| extruder         | coordinate of extuder (how much mm of plastic has been exruded) |
+
+
 
 ### docker image url:
 https://hub.docker.com/repository/docker/0crash0/opc-server-3dpr/general
@@ -28,10 +30,10 @@ https://hub.docker.com/repository/docker/0crash0/opc-server-3dpr/general
 
 ### things for nifi for working on ziiot platform:
 
-| template                | README                                 |
-|-------------------------|----------------------------------------|
-| nifi processor template | [3dp_test_gen_template_rest.xml][nifiTplt] |
-| nifi processor group    | [try_to_get_my_rest.json][nifiGrp]        |
+| template                | README                                      |
+|-------------------------|---------------------------------------------|
+| nifi processor template | [3dp_test_gen_template_rest.xml][nifiTplt]  |
+| nifi processor group    | [try_to_get_my_rest.json][nifiGrp]          |
 
 
 ### nifi opc ua processors(built has in this repo [nifi-libs][nifiProcsrs]):
