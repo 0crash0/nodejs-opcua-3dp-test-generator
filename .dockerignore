@@ -2,3 +2,5 @@ node_modules
 ziiot
 old
 nifi-libs
+kubernetes
+git-images

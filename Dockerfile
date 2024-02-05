@@ -1,6 +1,6 @@
 FROM node:18-alpine as build
 MAINTAINER Saprin Alexey
-LABEL version="2.0.0"
+LABEL version="2.0.1"
 WORKDIR /app
 
 

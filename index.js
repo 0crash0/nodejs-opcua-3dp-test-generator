@@ -12,11 +12,11 @@ const app= express();
 app.use(cors());
 
 app.use(
-    '/css',
+    '/datagen/opc-server-3dpr/css',
     express.static(path.resolve(__dirname,"css"))
 );
 app.use(
-    '/js',
+    '/datagen/opc-server-3dpr/js',
     express.static(path.resolve(__dirname,"js"))
 );
 app.use(
