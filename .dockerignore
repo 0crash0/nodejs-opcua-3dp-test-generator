@@ -4,3 +4,8 @@ old
 nifi-libs
 kubernetes
 git-images
+.idea
+.gitattributes
+.gitignore
+README.md
+docker-compose.yml

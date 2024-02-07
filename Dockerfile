@@ -1,6 +1,6 @@
 FROM node:18-alpine as build
 MAINTAINER Saprin Alexey
-LABEL version="2.0.1"
+LABEL version="2.0.2"
 WORKDIR /app
 
 
@@ -15,7 +15,8 @@ RUN cd /app/vue-3dp \
     && mkdir /app/css \
     && cp dist/js/* /app/js \
     && cp dist/css/* /app/css \
-    && cd ../
+    && cd ../ \
+    && rm -rf vue-3dp
 
 EXPOSE 26543 3000
 CMD ["npm", "run", "start"]
