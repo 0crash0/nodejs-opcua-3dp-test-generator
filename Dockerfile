@@ -1,22 +1,28 @@
 FROM node:18-alpine as build
-MAINTAINER Saprin Alexey
-LABEL version="2.0.2"
 WORKDIR /app
+COPY ./vue-3dp/package*.json ./
+RUN npm install
+COPY ./vue-3dp/. /app
+RUN npm run build
+
+FROM node:18-alpine
+MAINTAINER Saprin Alexey
+LABEL version="2.0.3"
 
 
+
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN cd /app/vue-3dp \
-    && npm install \
-    && npm run build \
-    && cp dist/index.html /app/ \
-    && mkdir /app/js \
-    && mkdir /app/css \
-    && cp dist/js/* /app/js \
-    && cp dist/css/* /app/css \
-    && cd ../ \
-    && rm -rf vue-3dp
+RUN mkdir /app/js \
+    && mkdir /app/css
 
-EXPOSE 26543 3000
+COPY --from=build /app/dist/index.html .
+COPY --from=build /app/dist/js/. ./js
+COPY --from=build /app/dist/css/. ./css
+
+
+
+EXPOSE 26543 $NODE_PORT
 CMD ["npm", "run", "start"]

@@ -16,9 +16,14 @@ spec:
       name: opc-server-3dpr
     spec:
       containers:
-        - image: 0crash0/opc-server-3dpr:v2.0.2
+        - image: 0crash0/opc-server-3dpr:v2.0.3
           imagePullPolicy: Always
           name: opc-server-3dpr
+          env:
+            - name: NODE_PORT
+              value: "3000"
+            - name: URL_PREFIX
+              value: "/datagen/opc-server-3dpr"
           ports:
             - containerPort: 26543
               protocol: TCP

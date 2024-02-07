@@ -7,23 +7,29 @@ const __dirname = path.dirname('./index.html');
 
 import cors from 'cors'
 
+//docker env configuring
+const cfg = {
+    port: process.env.NODE_PORT || 3000,
+    url_prefix: process.env.URL_PREFIX || '/datagen/opc-server-3dpr'
+};
+
 
 const app= express();
 app.use(cors());
 
 app.use(
-    '/datagen/opc-server-3dpr/css',
+    cfg.url_prefix+'/css',
     express.static(path.resolve(__dirname,"css"))
 );
 app.use(
-    '/datagen/opc-server-3dpr/js',
+    cfg.url_prefix+'/js',
     express.static(path.resolve(__dirname,"js"))
 );
 app.use(
-    '/datagen/opc-server-3dpr/gcode',
+    cfg.url_prefix+'/gcode',
     express.static(path.resolve(__dirname,"gcode"))
 );
-app.get('/datagen/opc-server-3dpr/', (req, res) => {
+app.get(cfg.url_prefix+'/', (req, res) => {
     //res.send("GO to <a href='/datagen/opc-server-3dpr/'>new url</a>")
     res.sendFile('index.html',{ root: __dirname });
 })
@@ -31,23 +37,23 @@ app.get('/datagen/opc-server-3dpr/', (req, res) => {
 /*app.get('/datagen/opc-server-3dpr/', (req, res) => {
     res.send("Hello World! <a href='/datagen/opc-server-3dpr/start'>start</a>")
 })*/
-app.get('/datagen/opc-server-3dpr/stop', (req, res) => {
+app.get(cfg.url_prefix+'/stop', (req, res) => {
     res.send("<a href='/datagen/opc-server-3dpr/start'>start</button>" +
         "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.stop_machine();
 })
-app.get('/datagen/opc-server-3dpr/start', (req, res) => {
+app.get(cfg.url_prefix+'/start', (req, res) => {
     res.send("<a href='/datagen/opc-server-3dpr/stop'>stop</a>" +
         "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.start_homing();
 })
 
-app.get('/datagen/opc-server-3dpr/setline/:id', (req, res) => {
+app.get(cfg.url_prefix+'/setline/:id', (req, res) => {
     res.send("requested to set line to:" + req.params.id+ "<a href='/datagen/opc-server-3dpr/stop'>stop</a>" +
         "<a href='/datagen/opc-server-3dpr/getdatajson'>Get Data</a>")
     my3dprinter.set_line(req.params.id);
 })
-app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
+app.get(cfg.url_prefix+'/getdatajson', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     res.end(JSON.stringify({
@@ -66,8 +72,8 @@ app.get('/datagen/opc-server-3dpr/getdatajson', (req, res) => {
     }));
 
 })
-app.listen(3000, () => {
-    console.log(`Example app listening on port 3000`)
+app.listen(cfg.port, () => {
+    console.log('Example app listening with prefix '+cfg.url_prefix+' on port:'+cfg.port)
 })
 
 let my3dprinter=new TrdPrinter();

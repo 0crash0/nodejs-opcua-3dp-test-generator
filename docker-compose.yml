@@ -2,12 +2,12 @@ version: "3.8"
 services:
   opc-server-3dpr-svc:
     container_name: opc-server-3dpr
-    image: 0crash0/opc-server-3dpr:v2.0.2
+    image: 0crash0/opc-server-3dpr:v2.0.3
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 26543:26543
-      - 3000:3000
+      - ${NODE_PORT}:${NODE_PORT}
     environment:
       NODE_ENV: production
